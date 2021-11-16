@@ -264,7 +264,7 @@ rule pca_projection_assign:
         bind = input_dict["bind_paths"],
         sif = input_dict["singularity_image"],
         outdir = output_dict["output_dir"] + "/pca_sex_checks/",
-        script = "/opt/WG1-pipeline-QC/Imputation/scripts/PCA_Projection_Plotting.R"
+        script = "/opt/SNP_imputation_1000g_hg38/Imputation/scripts/PCA_Projection_Plotting.R"
     shell:
         """
         singularity exec --bind {params.bind} {params.sif} echo {params.outdir} > {params.variables}

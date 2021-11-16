@@ -176,7 +176,7 @@ if not None in [pgen,pvar,psam]:
 
 
                     else:
-                        logger.info("ERROR:\nThe UPDATE/REMOVE/KEEP column in the pca_sex_checks/ancestry_update_remove.tsv and/or the pca_sex_checks/check_sex_update_remove.tsv file are not completed.\nPlease fill in these selections for the pipeline to continue.\nPlease see https://github.com/sc-eQTLgen-consortium/WG1-pipeline-QC/wiki/1---SNP-Genotype-Imputation#running-the-pipeline---final-qc-and-vcf-production for more details.")
+                        logger.info("ERROR:\nThe UPDATE/REMOVE/KEEP column in the pca_sex_checks/ancestry_update_remove.tsv and/or the pca_sex_checks/check_sex_update_remove.tsv file are not completed.\nPlease fill in these selections for the pipeline to continue.\nPlease see https://github.com/powellgenomicslab/SNP_imputation_1000g_hg38/wiki/SNP-Genotype-Imputation-Using-1000G-hg38-Reference#running-the-pipeline---final-run for more details.")
                 else:
                     plinkQC_files.append(output_dict["output_dir"] + "/pca_sex_checks/ancestry_update_remove.tsv")
 
