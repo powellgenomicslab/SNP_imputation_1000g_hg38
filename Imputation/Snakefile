@@ -45,8 +45,7 @@ if not None in [pgen,pvar,psam]:
 
 
         ## Check if column names are correct
-        if (psam_df.columns == ['#FID', 'IID', 'PAT', 'MAT', 'SEX', 'Provided_Ancestry','genotyping_platform', 'array_available', 'wgs_available','wes_available', 'age', 'age_range', 'Study']).all():
-
+        if (pd.Series(['#FID', 'IID', 'PAT', 'MAT', 'SEX', 'Provided_Ancestry']).isin(psam_df.columns).all()):
 
             ### Check for underscores in the FID and IID columns - if there are, update and make new files
             if (psam_df['#FID'].astype(str).str.contains("_").any() or psam_df['IID'].astype(str).str.contains("_").any()):
@@ -200,8 +199,9 @@ if not None in [pgen,pvar,psam]:
                 logger.info("Exiting.")
         else:
             logger.info("The column names of your psam file are not correct.\n\
-            They should be: '#FID', 'IID', 'PAT', 'MAT', 'SEX', 'Provided_Ancestry','genotyping_platform', 'array_available', 'wgs_available','wes_available', 'age', 'age_range', 'Study'.\n\
-            If the names look the same, check that the file is tab separated, without any spaces or other weird characters.\n\n\
+            They should conatain: '#FID', 'IID', 'PAT', 'MAT', 'SEX' and 'Provided_Ancestry'.\n\
+            Your file can contain additional metadata columns for each individual as well.\n\
+			If the names look the same, check that the file is tab separated, without any spaces or other weird characters.\n\n\
             Exiting.")
 
     else:
