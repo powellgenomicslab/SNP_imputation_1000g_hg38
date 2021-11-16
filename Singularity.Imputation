@@ -178,4 +178,5 @@ From: shub://drneavin/SingularityBaseImages:r363_python368
 
 %labels
 	Author = Drew Neavin
-	Image_version = 0.0.2
+	Image_name = Powell Lab SNP Imputation 1000G hg38
+	Image_version = 0.0.1
