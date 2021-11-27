@@ -127,9 +127,6 @@ if not None in [pgen,pvar,psam]:
                             ##### First, need to provide users summary of the ancestries and get interactive allele frequency selections ###
                             ### if there are any individuals chosen to remove, remove them from the psam
                             psam_df_local = psam_df
-                            if (ancestry_check["UPDATE/REMOVE/KEEP"] == "REMOVE").any():
-                                ids2remove = ancestry_check['IID'][ancestry_check["UPDATE/REMOVE/KEEP"] == "REMOVE"].values
-                                psam_df_local = psam_df_local[~psam_df_local.IID.isin(ids2remove)] 
 
                             ### if htere are any individuals chosen to update the ancestry, update them
                             if (ancestry_check["UPDATE/REMOVE/KEEP"] == "UPDATE").any():
@@ -137,12 +134,10 @@ if not None in [pgen,pvar,psam]:
                                 updates = pd.DataFrame(ancestry_check['PCA_Assignment'][ancestry_check["UPDATE/REMOVE/KEEP"] == "UPDATE"])
                                 updates.index = ids2update
                                 updates.columns = ['Provided_Ancestry']
-                                psam_df.index = psam_df.IID.values
-                                psam_df.update(updates)
                                 psam_df_local.index = psam_df_local.IID.values
                                 psam_df_local.update(updates)
 
-                            psam_df.to_csv(output_dict["output_dir"] + "/pca_sex_checks/updated_psam.psam", sep = "\t")
+                            psam_df_local.to_csv(output_dict["output_dir"] + "/pca_sex_checks/updated_psam.psam", sep = "\t", na_rep = "NA", index = False)
 
                             ### identify the ancestries in total and provide user input for maf selection
                             uniq_ancestries = psam_df_local['Provided_Ancestry'].unique()
@@ -169,11 +164,8 @@ if not None in [pgen,pvar,psam]:
 
                         plinkQC_files.append(expand(output_dict["output_dir"] + "/subset_ancestry/{ancestry}_individuals.psam", ancestry = ancestry_subsets))
                         impute_files.append(expand(output_dict["output_dir"] + "/minimac_imputed/{ancestry}_chr{chr}.dose.vcf.gz", ancestry = ancestry_subsets, chr = chromosomes))
-                        impute_files.append(output_dict["output_dir"] + "/genotype_donor_annotation/genotype_donor_annotation.tsv")
                         impute_files.append(expand(output_dict["output_dir"] + "/vcf_merged_by_ancestries/{ancestry}_imputed_hg38.vcf.gz.csi", ancestry = ancestry_subsets))
-                        impute_files.append(output_dict["output_dir"] + "/vcf_4_demultiplex/imputed_hg38_R2_0.3_MAF0.05_exons_sorted.vcf")
-                        impute_files.append(output_dict["output_dir"] + "/vcf_all_merged/imputed_hg38_R2_0.3_MAF0.05_exons_complete_cases.recode.vcf")
-
+                        impute_files.append(expand(output_dict["output_dir"] + "/vcf_all_merged/imputed_hg38.vcf.gz.csi"))
 
                     else:
                         logger.info("ERROR:\nThe UPDATE/REMOVE/KEEP column in the pca_sex_checks/ancestry_update_remove.tsv and/or the pca_sex_checks/check_sex_update_remove.tsv file are not completed.\nPlease fill in these selections for the pipeline to continue.\nPlease see https://github.com/powellgenomicslab/SNP_imputation_1000g_hg38/wiki/SNP-Genotype-Imputation-Using-1000G-hg38-Reference#running-the-pipeline---final-run for more details.")
