@@ -126,7 +126,7 @@ if not None in [pgen,pvar,psam]:
                         if not os.path.exists(output_dict["output_dir"] + "/pca_sex_checks/ancestry_mafs.tsv"):
                             ##### First, need to provide users summary of the ancestries and get interactive allele frequency selections ###
                             ### if there are any individuals chosen to remove, remove them from the psam
-                            psam_df_local = psam_df
+                            psam_df_local = pd.read_csv(output_dict["output_dir"] + "/indiv_missingness/indiv_missingness.psam", sep = "\t")
 
                             ### if htere are any individuals chosen to update the ancestry, update them
                             if (ancestry_check["UPDATE/REMOVE/KEEP"] == "UPDATE").any():

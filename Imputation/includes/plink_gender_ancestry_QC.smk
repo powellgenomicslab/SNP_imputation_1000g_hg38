@@ -40,7 +40,6 @@ rule check_sex:
         bed = output_dict["output_dir"] + "/check_sex/check_sex.bed",
         bim = output_dict["output_dir"] + "/check_sex/check_sex.bim",
         fam = output_dict["output_dir"] + "/check_sex/check_sex.fam",
-        hh = output_dict["output_dir"] + "/check_sex/check_sex.hh",
         log = output_dict["output_dir"] + "/check_sex/check_sex.log",
         nosex = output_dict["output_dir"] + "/check_sex/check_sex.nosex",
         sexcheck = output_dict["output_dir"] + "/check_sex/check_sex.sexcheck",
@@ -57,7 +56,7 @@ rule check_sex:
     shell:
         """
         singularity exec --bind {params.bind} {params.sif} plink2 --threads {threads} --pfile {params.infile} --make-bed --max-alleles 2 --out {params.out}
-        singularity exec --bind {params.bind} {params.sif} plink --threads {threads} --bfile {params.out} --check-sex --out {params.out}
+        singularity exec --bind {params.bind} {params.sif} plink --threads {threads} --bfile {params.out} --check-sex --biallelic-only strict --out {params.out}
         singularity exec --bind {params.bind} {params.sif} touch {output.nosex}
         singularity exec --bind {params.bind} {params.sif} sed 's/^ \+//g' {output.sexcheck} | singularity exec --bind {params.bind} {params.sif} sed 's/ \+/\t/g' > {output.sexcheck_tab}
         """
@@ -250,7 +249,7 @@ rule pca_projection_assign:
         projected_scores = output_dict["output_dir"] + "/pca_projection/final_subset_pruned_data_pcs.sscore",
         projected_1000g_scores = output_dict["output_dir"] + "/pca_projection/subset_pruned_1000g_pcs_projected.sscore",
         fam_1000g = output_dict["output_dir"] + "/common_snps/subset_1000g.psam",
-        psam = psam,
+        psam = output_dict["output_dir"] + "/indiv_missingness/indiv_missingness.psam",
         sexcheck = output_dict["output_dir"] + "/check_sex/check_sex.sexcheck.tsv",
     output:
         sexcheck = output_dict["output_dir"] + "/pca_sex_checks/check_sex_update_remove.tsv",
