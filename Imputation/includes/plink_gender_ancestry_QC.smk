@@ -249,7 +249,7 @@ rule pca_projection_assign:
         projected_scores = output_dict["output_dir"] + "/pca_projection/final_subset_pruned_data_pcs.sscore",
         projected_1000g_scores = output_dict["output_dir"] + "/pca_projection/subset_pruned_1000g_pcs_projected.sscore",
         fam_1000g = output_dict["output_dir"] + "/common_snps/subset_1000g.psam",
-        psam = output_dict["output_dir"] + "/indiv_missingness/indiv_missingness.psam",
+        psam = psam,
         sexcheck = output_dict["output_dir"] + "/check_sex/check_sex.sexcheck.tsv",
     output:
         sexcheck = output_dict["output_dir"] + "/pca_sex_checks/check_sex_update_remove.tsv",
