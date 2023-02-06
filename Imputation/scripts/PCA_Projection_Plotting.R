@@ -122,7 +122,7 @@ colnames(sex_mismatch)[1] <- paste0("#",colnames(sex_mismatch)[1])
 write_delim(sex_mismatch, paste0(outdir, "/check_sex_update_remove.tsv"), na = "", delim = "\t")
 
 anc_mismatch <- df4plots[which(df4plots$Plot == "Projected Data Assignments vs Original Assignments" & df4plots$Final_Assignment != "Matched"),]
-anc_temp <- df4plots[,c("FID","IID", "Assignment")]
+anc_temp <- df4plots[,c("FID","IID", "Final_Assignment")]
 colnames(anc_temp) <- c("FID","IID", "PCA_Assignment")
 
 anc_mismatch <- left_join(anc_mismatch[,c("FID","IID")], data_anc)
@@ -138,6 +138,9 @@ colnames(anc_mismatch)[1] <- paste0("#",colnames(anc_mismatch)[1])
 
 anc_mismatch <- anc_mismatch[,c("#FID", "IID", "Provided_Ancestry", "PCA_Assignment", "UPDATE/REMOVE/KEEP")]
 
-print("writing acestryupdate_remove.tsv file")
+anc_mismatch <- anc_mismatch[!(grepl("Unmatched", anc_mismatch$PCA_Assignment)),]
+
+
+print("writing acestry_update_remove.tsv file")
 write_delim(anc_mismatch, paste0(outdir,"/ancestry_update_remove.tsv"), na = "", delim = "\t")
 
